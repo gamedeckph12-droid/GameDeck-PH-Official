@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GameDeck PH</title>
+  <meta name="description" content="GameDeck PH offers affordable digital gaming packages, Steam games, Windows games and software, retro games, Android content, eBooks, comics, learning materials, movie marathon content, and more.">
+  <meta property="og:title" content="GameDeck PH — Affordable Digital Gaming & Entertainment">
+  <meta property="og:description" content="Affordable digital gaming packages with one-time payment. Steam, Windows, Retro, Android, eBooks, Comics, Learning Materials and Movie Marathon.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/images/banner1.jpg">
+  <meta name="theme-color" content="#c8102e">
+  <link rel="icon" href="/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* ============================================================
+       1. ROOT VARIABLES & RESET
+    ============================================================ */
+    :root {
+      --red: #c8102e;
+      --red2: #ff3b57;
+      --deep: #7a0a1a;
+      --bg: #050505;
+      --mut: rgba(255, 255, 255, .72);
+      --bd: rgba(255, 59, 87, .3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Fixed background image across the whole site (shows through any
+       section that doesn't set its own opaque background). File must be
+       named exactly /images/backgroundimage.jpg (case-sensitive on most hosts). */
+    body {
+      background: linear-gradient(rgba(0, 0, 0, .55), rgba(0, 0, 0, .55)),
+                  url(/images/backgroundimage.jpg) center / cover fixed no-repeat #000;
+      color: #fff;
+      font-family: Inter, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; }
+    :focus-visible { outline: 2px solid var(--red2); outline-offset: 3px; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    section { padding: 80px 0; }
+
+    .t {
+      font-size: 2.3rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 6px;
+      background: linear-gradient(90deg, #ff3b57, #a3132d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .t .em { -webkit-text-fill-color: initial; margin-left: 8px; }
+
+    .sub {
+      text-align: center;
+      color: var(--mut);
+      max-width: 680px;
+      margin: 0 auto 40px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--red);
+      color: #fff;
+      border: 1px solid var(--red);
+      padding: 13px 30px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: .9rem;
+      transition: .3s;
+    }
+    .btn:hover { background: #fff; color: #000; box-shadow: 0 0 25px rgba(255, 59, 87, .6); }
+    .btn.o { background: transparent; border-color: var(--red2); }
+    .btn.o:hover { background: var(--red); color: #fff; }
+
+    .rv { opacity: 0; transform: translateY(24px); transition: .6s; }
+    .rv.on { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+      .rv { opacity: 1; transform: none; }
+    }
+
+    /* ============================================================
+       2. TOP BAR (rotating messages)
+    ============================================================ */
+    .topbar {
+      position: sticky;
+      top: 0;
+      height: 40px;
+      background: linear-gradient(90deg, #7a0a1a, #e0203c, #7a0a1a, #e0203c);
+      background-size: 300% 100%;
+      animation: sh 6s linear infinite, tg 2.5s ease-in-out infinite alternate;
+      overflow: hidden;
+      z-index: 102;
+    }
+    .topbar span {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: .9rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: .5s;
+      text-shadow: 0 0 10px rgba(255, 255, 255, .6);
+    }
+    .topbar span.on { opacity: 1; transform: none; }
+
+    @keyframes sh { to { background-position: 300% 0; } }
+    @keyframes tg {
+      from { box-shadow: 0 2px 10px rgba(255, 59, 87, .35); }
+      to   { box-shadow: 0 4px 30px rgba(255, 59, 87, .95); }
+    }
+
+    /* ============================================================
+       3. NAVIGATION
+    ============================================================ */
+    .nav {
+      position: sticky;
+      top: 40px;
+      z-index: 100;
+      background: #000;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, .6);
+    }
+    .nav .container {
+      max-width: 1400px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+      padding: 0 5%;
+    }
+    .nav img { height: 60px; width: auto; }
+
+    .links { display: flex; gap: 22px; }
+    .links a { font-weight: 700; font-size: .95rem; color: #ddd; transition: .2s; }
+    .links a:hover { color: var(--red2); }
+
+    .nr { display: flex; align-items: center; gap: 12px; }
+
+    .pl {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #111;
+      border: 1px solid rgba(255, 255, 255, .25);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: .9rem;
+      transition: .3s;
+    }
+    .pl:hover { border-color: var(--red2); box-shadow: 0 0 18px rgba(255, 59, 87, .5); }
+    .pl.r { background: var(--red); border-color: var(--red); }
+
+    #loginBtn { background: var(--red); border-color: var(--red); }
+    #loginBtn:hover { background: #e0203c; box-shadow: 0 0 18px rgba(255, 59, 87, .6); }
+
+    #user { display: none; align-items: center; gap: 10px; font-size: .85rem; color: var(--mut); }
+
+    .burger { display: none; background: none; border: 0; color: #fff; font-size: 1.4rem; }
+
+    .mm {
+      display: none;
+      position: fixed;
+      inset: 120px 0 0;
+      background: #000;
+      z-index: 99;
+      padding: 20px;
+      flex-direction: column;
+    }
+    .mm.open { display: flex; }
+    .mm a { padding: 16px 0; border-bottom: 1px solid rgba(255, 255, 255, .1); font-weight: 700; }
+
+    @media (max-width: 850px) {
+      .links, .nr .fbp { display: none; }
+      .burger { display: block; }
+      .pl { padding: 9px 18px; }
+    }
+
+    /* ============================================================
+       4. HERO
+    ============================================================ */
+    .hero {
+      position: relative;
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 60px 0;
+    }
+    .slides, .slide { position: absolute; inset: 0; }
+    .slide {
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.2s;
+    }
+    .slide.on { opacity: 1; }
+
+    .ov {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0, 0, 0, .88) 10%, rgba(0, 0, 0, .55) 55%, rgba(0, 0, 0, .35));
+    }
+
+    .hg {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 70px;
+      align-items: center;
+      padding: 0 5%;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-emoji {
+      font-size: 2rem;
+      margin-bottom: 18px;
+      filter: drop-shadow(0 0 10px rgba(255, 59, 87, .6));
+    }
+
+    .gl {
+      position: relative;
+      font-family: Orbitron, sans-serif;
+      font-size: 3rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.25;
+      margin-bottom: 14px;
+      background: linear-gradient(90deg, #ff1f3d, #ffd0d6, #b00020, #ff1f3d);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-text-stroke: 1px #fff;
+      animation: sh 4s linear infinite, gp 2s ease-in-out infinite alternate;
+    }
+    .gl::before, .gl::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      background: inherit;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gl::before {
+      left: 2px;
+      text-shadow: -2px 0 #ff00a0;
+      clip-path: inset(44% 0 40% 0);
+      animation: g1 2s infinite linear alternate-reverse;
+    }
+    .gl::after {
+      left: -2px;
+      text-shadow: -2px 0 #ff8a00;
+      clip-path: inset(60% 0 20% 0);
+      animation: g1 2.6s infinite linear alternate-reverse;
+    }
+
+    @keyframes gp {
+      from { filter: drop-shadow(0 0 4px rgba(255, 42, 68, .5)); }
+      to   { filter: drop-shadow(0 0 24px rgba(255, 42, 68, 1)); }
+    }
+    @keyframes g1 {
+      0%   { clip-path: inset(20% 0 70% 0); }
+      25%  { clip-path: inset(60% 0 10% 0); }
+      50%  { clip-path: inset(40% 0 45% 0); }
+      75%  { clip-path: inset(80% 0 5% 0); }
+      100% { clip-path: inset(10% 0 75% 0); }
+    }
+
+    .hero p {
+      display: inline-block;
+      font-size: 1.2rem;
+      font-weight: 600;
+      background: rgba(0, 0, 0, .35);
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 26px;
+      max-width: 540px;
+    }
+
+    .hr { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .badges { display: flex; flex-wrap: wrap; gap: 10px; }
+    .badges span {
+      background: rgba(0, 0, 0, .5);
+      border: 1px solid var(--bd);
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: .85rem;
+    }
+    .badges i { margin-right: 5px; }
+
+    /* Hero flip-cover carousel */
+    .cov {
+      --u: 150px;
+      --h: 360px;
+      position: relative;
+      height: calc(var(--h) + 70px);
+      perspective: 1200px;
+    }
+    .cv {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      height: calc(var(--h) * .64);
+      width: auto;
+      max-width: none;
+      border-radius: 12px;
+      opacity: 0;
+      pointer-events: none;
+      cursor: pointer;
+      backface-visibility: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, .6);
+      transition: all .6s cubic-bezier(.25, 1, .5, 1);
+      transform: translate(-50%, -50%);
+    }
+    .c0 {
+      height: var(--h);
+      z-index: 20;
+      opacity: 1;
+      pointer-events: auto;
+      border: 2px solid var(--red2);
+      box-shadow: 0 0 45px rgba(255, 59, 87, .65);
+    }
+    .cl1, .cr1 { height: calc(var(--h) * .8); z-index: 10; opacity: .92; pointer-events: auto; filter: brightness(.8); }
+    .cl2, .cr2 { z-index: 5; opacity: .75; pointer-events: auto; filter: brightness(.65); }
+    .cl1 { transform: translate(calc(-50% - var(--u) * 1.15), -50%) rotateY(22deg); }
+    .cr1 { transform: translate(calc(-50% + var(--u) * 1.15), -50%) rotateY(-22deg); }
+    .cl2 { transform: translate(calc(-50% - var(--u) * 2), -50%) rotateY(30deg); }
+    .cr2 { transform: translate(calc(-50% + var(--u) * 2), -50%) rotateY(-30deg); }
+
+    @media (max-width: 850px) {
+      .hg { grid-template-columns: 1fr; text-align: center; gap: 30px; }
+      .hr, .badges { justify-content: center; }
+      .gl { font-size: 2rem; }
+      .cov { --u: 70px; --h: 210px; }
+      .t { font-size: 1.6rem; }
+    }
+
+    /* ============================================================
+       5. PACKAGES
+    ============================================================ */
+    .pg { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; max-width: 1000px; margin: 0 auto; }
+    .pk {
+      border: 1px solid rgba(255, 59, 87, .25);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(15, 15, 20, .8);
+      display: flex;
+      flex-direction: column;
+      transition: .3s;
+    }
+    .pk:hover { transform: translateY(-8px); border-color: var(--red2); box-shadow: 0 15px 35px rgba(255, 59, 87, .2); }
+    .pk .im { position: relative; background: #0f0f0f; padding: 20px; display: flex; justify-content: center; }
+    .pk img { width: 100%; height: auto; max-height: 520px; object-fit: contain; }
+    .tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: var(--red);
+      font-weight: 900;
+      font-size: .72rem;
+      padding: 4px 12px;
+      border-radius: 50px;
+      text-transform: uppercase;
+    }
+    .pk .bd { padding: 22px 25px; text-align: center; }
+    .pk h3 { font-size: 1.4rem; margin-bottom: 6px; }
+    .pr { color: #ff5c73; font-weight: 800; font-size: 1.5rem; }
+    .pk .bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px;
+      font-weight: 800;
+      border-top: 1px solid rgba(255, 255, 255, .1);
+      transition: .3s;
+    }
+    .pk .bar:hover { background: var(--red); }
+
+    @media (max-width: 850px) { .pg { grid-template-columns: 1fr; } }
+
+    /* ============================================================
+       6. CUSTOMER PROOFS CAROUSEL + LIGHTBOX
+    ============================================================ */
+    .pbadge {
+      display: block;
+      width: max-content;
+      margin: 0 auto 14px;
+      padding: 6px 18px;
+      border: 1px solid var(--bd);
+      border-radius: 50px;
+      background: rgba(255, 59, 87, .1);
+      color: #ff5c73;
+      font-size: .75rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+    .pt {
+      font-family: Orbitron, sans-serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-align: center;
+      text-shadow: 0 0 25px rgba(255, 59, 87, .4);
+      margin-bottom: 12px;
+    }
+    .bar2 { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin: 34px 0 22px; }
+    .pill { background: var(--red2); color: #000; padding: 9px 18px; border-radius: 30px; font-size: .85rem; font-weight: 800; border: 0; }
+    .arr { display: flex; gap: 10px; }
+    .arr button, .tn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .05);
+      border: 1px solid var(--bd);
+      color: var(--red2);
+      transition: .3s;
+    }
+    .arr button:hover, .tn:hover { background: var(--red2); color: #000; }
+
+    .vp { overflow: hidden; padding: 8px 0 20px; }
+    .tk { display: flex; gap: 20px; transition: transform .45s ease-out; }
+    .pc {
+      flex: 0 0 calc((100% - 60px) / 4);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(18, 18, 26, .9);
+      cursor: pointer;
+      transition: .4s;
+      text-align: left;
+      color: inherit;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .pc:hover {
+      transform: translateY(-8px);
+      border-color: var(--red2);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, .7), 0 0 25px rgba(255, 59, 87, .2);
+    }
+    .th { position: relative; height: 230px; background: #000; overflow: hidden; }
+    .th img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: .5s; }
+    .pc:hover .th img { transform: scale(1.07); }
+
+    .ct, .vt {
+      position: absolute;
+      top: 12px;
+      font-size: .68rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid;
+      backdrop-filter: blur(8px);
+      text-transform: uppercase;
+    }
+    .ct { left: 12px; color: #ff5c73; background: rgba(255, 59, 87, .15); }
+    .vt { right: 12px; color: #00e676; background: rgba(0, 230, 118, .2); }
+
+    .pb { padding: 16px 18px; }
+    .st { color: #ff5c73; font-size: .75rem; margin-bottom: 8px; }
+    .st small { color: #aaa; font-weight: 600; margin-left: 6px; }
+    .pb h3 { font-size: 1rem; margin-bottom: 6px; line-height: 1.3; }
+    .pb .lc { color: #ff5c73; font-size: .8rem; font-weight: 700; margin-bottom: 8px; }
+    .pb p { font-size: .82rem; color: rgba(255, 255, 255, .65); line-height: 1.45; }
+
+    .bt {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(255, 255, 255, .08);
+      color: #888;
+      font-size: .88rem;
+    }
+    .dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #00e676;
+      margin-right: 6px;
+      box-shadow: 0 0 10px #00e676;
+    }
+
+    @media (max-width: 1100px) { .pc { flex-basis: calc((100% - 40px) / 3); } }
+    @media (max-width: 800px)  { .pc { flex-basis: calc((100% - 20px) / 2); } .pt { font-size: 1.6rem; } }
+    @media (max-width: 560px)  { .pc { flex-basis: 85%; } }
+
+    .lb {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .9);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      gap: 12px;
+      text-align: center;
+    }
+    .lb.on { display: flex; }
+    .lb img { max-height: 75vh; max-width: min(90vw, 800px); object-fit: contain; border-radius: 12px; border: 1px solid var(--bd); }
+    .lb button {
+      position: absolute;
+      background: rgba(255, 255, 255, .1);
+      border: 0;
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+    }
+    .lb button:hover { background: var(--red); }
+
+    /* ============================================================
+       7. STATS FRAME
+    ============================================================ */
+    .stats { padding: 50px 0; }
+    .sw { max-width: 1100px; margin: 0 auto; filter: drop-shadow(0 0 12px rgba(255, 59, 87, .6)); }
+    .so {
+      --c: 22px;
+      padding: 4px;
+      background: linear-gradient(90deg, #ff3b57, #7a0a1a 50%, #ff3b57);
+      clip-path: polygon(var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)),
+                          calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)), 0 var(--c));
+    }
+    .si {
+      --c: 19px;
+      background: #050505;
+      padding: 34px 10px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      text-align: center;
+      clip-path: polygon(var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)),
+                          calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)), 0 var(--c));
+    }
+    .sn { font-size: 2.2rem; font-weight: 800; line-height: 1.1; }
+    .sl { color: #999; font-size: .72rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-top: 6px; }
+
+    @media (max-width: 700px) { .si { grid-template-columns: 1fr 1fr; gap: 28px; } }
+
+    /* ============================================================
+       8. POPULAR ITEMS GRID
+    ============================================================ */
+    .gr { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+    .gc {
+      position: relative;
+      border: 1px solid rgba(255, 59, 87, .2);
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(15, 15, 20, .75);
+      transition: .3s;
+    }
+    .gc:hover { transform: translateY(-6px); border-color: var(--red2); box-shadow: 0 12px 30px rgba(255, 59, 87, .2); }
+    .gc img { aspect-ratio: 3 / 4; width: 100%; object-fit: cover; }
+    .gt {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: .66rem;
+      font-weight: 900;
+      padding: 4px 10px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      color: #000;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, .6);
+    }
+    .gc h3 { font-size: .95rem; text-align: center; padding: 12px 8px; }
+
+    @media (max-width: 900px) { .gr { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 560px) { .gr { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
+
+    /* ============================================================
+       9. TESTIMONIALS
+    ============================================================ */
+    .tw { position: relative; overflow: hidden; max-width: 1000px; margin: 0 auto; }
+    .tt { display: flex; transition: transform .5s cubic-bezier(.25, 1, .5, 1); }
+    .tc { flex: 0 0 33.333%; padding: 0 12px; }
+    .ti {
+      background: rgba(255, 59, 87, .05);
+      border: 2px solid var(--bd);
+      border-radius: 10px;
+      padding: 32px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .ti q {
+      display: block;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, .92);
+      margin: 14px 0 22px;
+      quotes: none;
+      line-height: 1.8;
+    }
+    .au { display: flex; align-items: center; gap: 14px; }
+    .av {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff3b57, #a3132d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: .85rem;
+    }
+    .au h4 { color: #ff5c73; }
+    .au span { font-size: .8rem; color: #aaa; }
+
+    .nv { display: flex; justify-content: center; align-items: center; gap: 14px; margin-top: 26px; }
+    .dots { display: flex; gap: 8px; }
+    .dots i { width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, .2); cursor: pointer; }
+    .dots i.on { background: var(--red2); transform: scale(1.2); }
+
+    @media (max-width: 800px) { .tc { flex-basis: 100%; } }
+
+    /* ============================================================
+       10. FAQ
+    ============================================================ */
+    .fq { max-width: 800px; margin: 0 auto; }
+    .fi {
+      border: 2px solid rgba(255, 59, 87, .22);
+      border-radius: 8px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      transition: .3s;
+      background: rgba(255, 59, 87, .04);
+    }
+    .fi:hover { border-color: rgba(255, 59, 87, .55); }
+    .fi button {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: none;
+      border: 0;
+      color: #fff;
+      padding: 22px 20px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: left;
+    }
+    .fi b { color: var(--red2); font-size: 1.5rem; transition: .3s; }
+    .fi.on b { transform: rotate(45deg); }
+    .fa { max-height: 0; overflow: hidden; transition: max-height .3s; }
+    .fi.on .fa { max-height: 300px; }
+    .fa p { padding: 0 20px 20px; color: rgba(255, 255, 255, .85); line-height: 1.7; font-family: Arial, Helvetica, sans-serif; font-size: .98rem; }
+
+    /* Open FAQ item shows a red border/glow; buttons never show the
+       browser's default yellow focus ring on click — only a red ring on keyboard nav. */
+    .fq button { outline: none; }
+    .fq button:focus-visible { outline: 2px solid var(--red2); outline-offset: -2px; }
+    .fi.on { border-color: var(--red2); box-shadow: 0 0 16px rgba(255, 59, 87, .35); }
+    .fi.on button { color: var(--red2); }
+
+    /* ============================================================
+       11. CTA + CONTACT
+    ============================================================ */
+    .cta {
+      position: relative;
+      text-align: center;
+      padding: 90px 20px;
+      margin-top: 40px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, .68);
+      border-block: 2px solid var(--red2);
+      clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 5% 100%, 0 85%);
+    }
+    .cta::before {
+      content: "";
+      position: absolute;
+      inset: -50%;
+      background: repeating-linear-gradient(transparent 0 40px, var(--red2) 40px 41px),
+                  repeating-linear-gradient(90deg, transparent 0 40px, var(--red2) 40px 41px);
+      opacity: .15;
+      transform: perspective(400px) rotateX(60deg) scale(1.5);
+      animation: gm 10s linear infinite;
+    }
+    @keyframes gm { to { transform: perspective(400px) rotateX(60deg) translateY(40px) scale(1.5); } }
+
+    .cta .in {
+      position: relative;
+      background: rgba(0, 0, 0, .78);
+      border: 1px solid var(--red2);
+      padding: 3rem 2rem;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 0 30px rgba(255, 59, 87, .2);
+    }
+    .cta h2 {
+      font-family: Orbitron, sans-serif;
+      text-transform: uppercase;
+      font-size: clamp(1.5rem, 4vw, 2.3rem);
+      margin-bottom: 12px;
+      text-shadow: 0 0 12px var(--red2);
+    }
+    .cta p { color: #ccc; margin-bottom: 24px; }
+    .cta .btn { margin: 6px; }
+
+    .cg { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; max-width: 1000px; margin: 0 auto; }
+    .ci p { margin-bottom: 16px; color: var(--mut); display: flex; align-items: center; gap: 10px; }
+    .ci i { width: 26px; text-align: center; }
+
+    .cf {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid var(--bd);
+      border-radius: 12px;
+      padding: 26px;
+    }
+    input, textarea {
+      background: #111;
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 8px;
+      color: #fff;
+      padding: 12px 14px;
+      font: inherit;
+      width: 100%;
+    }
+    input:focus, textarea:focus { border-color: var(--red2); outline: 0; }
+    textarea { min-height: 120px; resize: vertical; }
+
+    @media (max-width: 800px) { .cg { grid-template-columns: 1fr; } }
+
+    /* ============================================================
+       12. FOOTER
+    ============================================================ */
+    footer { background: rgba(5, 5, 5, .85); border-top: 2px solid var(--red2); padding: 60px 0 30px; }
+    .fg { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 36px; }
+    footer img { height: 80px; margin-bottom: 22px; }
+    .sg { font-weight: 800; font-size: .9rem; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 18px; max-width: 340px; }
+    footer h3 { color: var(--red2); font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
+    footer .l a { display: block; color: var(--mut); margin-bottom: 12px; transition: .3s; }
+    footer .l a:hover { color: var(--red2); padding-left: 5px; }
+
+    .so2 { display: flex; gap: 14px; }
+    .so2 a {
+      width: 36px;
+      height: 36px;
+      border: 1px solid #1877f2;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      background: #1877f2;
+    }
+    .so2 a:hover { background: #0e5fc1; }
+
+    .cp { border-top: 1px solid var(--bd); padding-top: 20px; text-align: center; color: rgba(255, 255, 255, .5); font-size: .9rem; }
+    .cp small { display: block; margin: 18px auto 0; max-width: 900px; font-size: .72rem; opacity: .6; line-height: 1.6; }
+
+    @media (max-width: 700px) { .fg { grid-template-columns: 1fr; } }
+
+    /* ============================================================
+       13. FLOATING ELEMENTS (chat bubble, back-to-top, modals)
+    ============================================================ */
+    .chat {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 90;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #1877f2;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 0 25px rgba(24, 119, 242, .6);
+    }
+    #top {
+      display: none;
+      position: fixed;
+      bottom: 100px;
+      right: 34px;
+      z-index: 90;
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 50%;
+      background: #fff;
+      color: #000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .md {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .85);
+      z-index: 1100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .md.on { display: flex; }
+    .mb {
+      position: relative;
+      background: linear-gradient(160deg, #2b0509, #1a0306 60%, #0d0102);
+      border: 1px solid var(--red2);
+      border-radius: 14px;
+      padding: 32px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 0 30px rgba(255, 59, 87, .35);
+    }
+    .mb h3 { margin-bottom: 18px; }
+    .mb input { margin-bottom: 14px; background: rgba(0, 0, 0, .45); border: 1px solid rgba(255, 59, 87, .35); }
+    .mb .x { position: absolute; top: 10px; right: 14px; background: none; border: 0; color: #fff; font-size: 1.6rem; }
+    #err { display: none; color: var(--red2); font-size: .85rem; margin-bottom: 12px; }
+  </style>
+</head>
+
+<body>
+  <div class="topbar" id="tb" aria-live="polite"></div>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <header class="nav">
+    <div class="container">
+      <a href="#home" aria-label="GameDeck PH home">
+        <img src="/images/logo.png" alt="GameDeck PH logo" width="120" height="60">
+      </a>
+      <nav class="links" aria-label="Main">
+        <a href="#home">Home</a>
+        <a href="#packages">Steam Package</a>
+        <a href="#packages">GDrive Package</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="nr">
+        <span id="user">
+          <i class="fa-solid fa-circle-check" style="color:var(--red2)"></i>
+          <span id="uname"></span>
+          <button class="pl" id="logout" style="padding:7px 16px">Logout</button>
+        </span>
+        <a class="pl fbp fbl" href="#" target="_blank" rel="noopener" aria-label="Facebook" style="background:#1877f2;border-color:#1877f2">
+          <i class="fa-brands fa-facebook-f" style="color:#fff"></i>
+        </a>
+        <button class="pl" id="loginBtn"><i class="fa-solid fa-user"></i> Login</button>
+        <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mm" id="mm">
+    <a href="#home">Home</a>
+    <a href="#packages">Steam Package</a>
+    <a href="#packages">GDrive Package</a>
+    <a href="#contact">Contact</a>
+    <a class="fbl" href="#" target="_blank" rel="noopener">Facebook</a>
+  </div>
+
+  <main>
+
+    <!-- ============================================================
+         HERO
+    ============================================================ -->
+    <section class="hero" id="home">
+      <div class="slides" id="slides" aria-hidden="true"></div>
+      <div class="ov"></div>
+      <div class="hg">
+        <div>
+          <h1 class="gl" data-text="Ultimate Affordable Experience">Ultimate<br>Affordable<br>Experience</h1>
+          <div class="hero-emoji" aria-hidden="true">🎮</div>
+          <p>Steam, Windows, retro, Android and more. Digital gaming with a one-time payment and lifetime access where applicable.</p>
+          <div class="hr">
+            <a class="btn" href="#packages"><i class="fa-solid fa-layer-group"></i> View Packages</a>
+            <div class="badges">
+              <span><i class="fa-solid fa-check" style="color:#3ddc84"></i>Secure</span>
+              <span><i class="fa-solid fa-infinity" style="color:#4fc3ff"></i>Lifetime Access</span>
+              <span><i class="fa-solid fa-receipt" style="color:#ffb020"></i>One-Time Payment</span>
+            </div>
+          </div>
+        </div>
+        <div class="cov" id="cov"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PACKAGES
+    ============================================================ -->
+    <section id="packages" style="background:rgba(10,10,10,.72);border-block:1px solid #1a1a1a">
+      <div class="container">
+        <h2 class="t rv">Featured Package Deals<span class="em">🎮</span></h2>
+        <p class="sub rv">Choose a digital gaming package and get more entertainment for a single payment.</p>
+        <div class="pg" id="pkgGrid"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CUSTOMER PROOFS
+    ============================================================ -->
+    <section id="proofs" style="background:linear-gradient(180deg,rgba(5,5,8,.75),rgba(12,13,20,.75) 50%,rgba(5,5,8,.75))">
+      <div class="container">
+        <span class="pbadge"><i class="fa-solid fa-camera-retro"></i> AUTHENTIC CUSTOMER PROOFS &amp; FEEDBACK</span>
+        <h2 class="pt">HAPPY GAMERS &amp; SATISFIED CUSTOMERS</h2>
+        <p class="sub">See real customer feedback and proof from gamers who have experienced GameDeck PH products and packages.</p>
+        <div class="bar2">
+          <button class="pill">All Proofs (100+)</button>
+          <div class="arr">
+            <button id="pp" aria-label="Previous proofs"><i class="fa-solid fa-arrow-left"></i></button>
+            <button id="pn" aria-label="Next proofs"><i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+        </div>
+        <div class="vp" id="pv"><div class="tk" id="pt"></div></div>
+        <div class="bt">
+          <span><i class="fa-solid fa-bolt" style="color:var(--red2)"></i> Showing <b>100+</b> customer proofs. Autolooping continuously. Hover to pause.</span>
+          <span><i class="dot"></i>Customer proofs from GameDeck PH buyers</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Customer proof preview">
+      <button id="lx" style="top:20px;right:20px" aria-label="Close">&times;</button>
+      <button id="lp" style="left:20px;top:50%" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+      <img id="li" src="" alt="Customer proof preview">
+      <div>
+        <h3 id="lt"></h3>
+        <p id="lc" style="color:#bbb;font-size:.9rem"></p>
+      </div>
+      <button id="ln" style="right:20px;top:50%" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <!-- ============================================================
+         STATS
+    ============================================================ -->
+    <div class="stats" style="background:rgba(10,10,16,.7);border-top:1px solid #1a1a1a">
+      <div class="container">
+        <div class="sw"><div class="so"><div class="si" id="stats"></div></div></div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         MOST POPULAR ITEMS
+    ============================================================ -->
+    <section id="popular">
+      <div class="container">
+        <h2 class="t rv">Most Popular Items<span class="em">🔥</span></h2>
+        <p class="sub rv">Games, Android games, retro games and movies from the GameDeck PH collection.</p>
+        <div class="gr" id="gr"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TESTIMONIALS
+    ============================================================ -->
+    <section id="reviews" style="padding-bottom:90px">
+      <div class="container">
+        <h2 class="t rv">What Our Customers Say<span class="em">💬</span></h2>
+        <p class="sub rv">Feedback from gamers who tried GameDeck PH.</p>
+        <div class="tw"><div class="tt" id="tt"></div></div>
+        <div class="nv">
+          <button class="tn" id="tp" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="dots" id="dots"></div>
+          <button class="tn" id="tx" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FAQ
+    ============================================================ -->
+    <section id="faq" style="background:rgba(5,5,5,.55)">
+      <div class="container">
+        <h2 class="t rv">Frequently Asked Questions<span class="em">❓</span></h2>
+        <p class="sub rv">Find answers to common questions</p>
+        <div class="fq" id="fq"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CTA
+    ============================================================ -->
+    <div class="cta">
+      <div class="in">
+        <h2>Ready to Level Up Your Library? 🚀</h2>
+        <p>Get your GameDeck PH package with a one-time payment.</p>
+        <a class="btn" href="#packages">View Packages</a>
+        <a class="btn o" href="#faq">Read FAQs</a>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         CONTACT
+    ============================================================ -->
+    <section id="contact">
+      <div class="container">
+        <h2 class="t rv">Contact GameDeck PH<span class="em">📩</span></h2>
+        <p class="sub rv">Questions about a package or your order? Send us a message.</p>
+        <div class="cg">
+          <div class="ci">
+            <p><i class="fa-brands fa-facebook" style="color:#1877f2"></i><a class="fbl" href="#" target="_blank" rel="noopener">Facebook Page Messenger — our main way of talking to customers</a></p>
+            <p><i class="fa-solid fa-wallet" style="color:#00a1e0"></i>Payment: GCash only</p>
+            <p><i class="fa-solid fa-headset" style="color:#ff9f1c"></i>24/7 Customer Support</p>
+          </div>
+          <form class="cf" id="cf">
+            <input type="text" placeholder="Name" aria-label="Name" required>
+            <input type="email" placeholder="Email" aria-label="Email" required>
+            <textarea placeholder="Message" aria-label="Message" required></textarea>
+            <button class="btn" type="submit">Send Message</button>
+            <span id="cs" role="status" style="color:var(--red2);font-size:.85rem"></span>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <div class="container">
+      <div class="fg">
+        <div>
+          <img src="/images/logo.png" alt="GameDeck PH logo" loading="lazy">
+          <p class="sg">Ultimate affordable gaming experience 🎮</p>
+          <div class="so2">
+            <a class="fbl" href="#" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          </div>
+        </div>
+        <div class="l">
+          <h3>Quick Links</h3>
+          <a href="#home">Home</a>
+          <a href="#packages">Steam Package</a>
+          <a href="#packages">GDrive Package</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="l">
+          <h3>Legal &amp; Support</h3>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms &amp; Conditions</a>
+          <a href="#">Refund Policy</a>
+        </div>
+      </div>
+      <div class="cp">
+        © 2026 GameDeck PH. All rights reserved.
+        <small><b>Legal Disclaimer:</b> GameDeck PH is a digital-products storefront. All trademarks, logos and intellectual property mentioned remain the property of their respective owners. This site is not affiliated with, endorsed by, or connected to any platform or publisher mentioned. Users are responsible for complying with all applicable licensing agreements.</small>
+      </div>
+    </div>
+  </footer>
+
+  <a class="chat fbl" href="#" target="_blank" rel="noopener" aria-label="Chat with us on Facebook"><i class="fa-solid fa-comments"></i></a>
+  <button id="top" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+  <!-- ============================================================
+       LOGIN MODAL
+  ============================================================ -->
+  <div class="md" id="md" role="dialog" aria-modal="true" aria-labelledby="mt">
+    <div class="mb">
+      <button class="x" id="mx" aria-label="Close">&times;</button>
+      <h3 id="mt">Login</h3>
+      <p style="color:var(--mut);font-size:.85rem;margin-bottom:16px;line-height:1.6">
+        Enter the username and password provided by us. This is only available for customers who have already availed of a GameDeck PH package. If you haven't received yours yet, message us on Facebook and we'll assist you.
+      </p>
+      <div id="err" role="alert">Invalid username or password.</div>
+      <form id="lf">
+        <input id="lu" placeholder="Username" autocomplete="username" required>
+        <input id="lpw" type="password" placeholder="Password" autocomplete="current-password" required>
+        <button class="btn" style="width:100%" type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    /* ============================================================
+       CONFIG / DATA
+    ============================================================ */
+
+    // Facebook URL — change here, updates every Facebook link on the page.
+    const FB = 'https://facebook.com/YOUR-FACEBOOK-PAGE';
+
+    // Image paths.
+    //   banner1-5.jpg      = small, portrait (~9:16) ANIMATED cover art -> hero flip carousel (.cov)
+    //   bannercover1-5.jpg = wide/landscape cover image -> hero background slideshow (.slides)
+    const IMG = '/images/';
+    const covers  = [1, 2, 3, 4, 5].map(n => IMG + 'banner' + n + '.jpg');
+    const banners = [1, 2, 3, 4, 5].map(n => IMG + 'bannercover' + n + '.jpg');
+
+    // Top bar rotating messages.
+    const bar = [
+      '24/7 • 365 Customer Support 🎧',
+      'Lifetime Access ♾️',
+      'One-Time Payment 🧾',
+      'Fast & Secure Transactions ⚡',
+      'Instant Digital Access 🚀'
+    ];
+
+    // Package cards.
+    const packages = [
+        { name: 'Steam Games Package', tag: 'Steam',  price: '₱1,499', img: IMG + 'steampackage.png',  link: 'files/package1.html' },
+        { name: 'GDrive Package',      tag: 'GDrive', price: '₱499',   img: IMG + 'gdrivepackage.png', link: 'files/package2.html' }
+    ];
+
+    // Customer proof cards — edit title/caption; set verified:false or rating:0 to hide those badges.
+    const proofDetails = [
+      { title: 'GCash Payment Confirmed',   cap: 'Customer completed payment for the Steam Games Package via GCash — confirmed within minutes.' },
+      { title: 'Files Sent via Messenger',  cap: 'Download link and access details sent straight to the customer\'s Facebook Messenger after payment.' },
+      { title: 'GDrive Package Received',   cap: 'Customer confirming full access to their GDrive Package right after checkout.' },
+      { title: 'Quick Support Response',    cap: 'Customer asked a question before buying and got a same-day reply from our team.' },
+      { title: 'Steam Library Unlocked',    cap: 'Screenshot of a customer\'s expanded Steam library after availing the package.' },
+      { title: 'Order Completed',           cap: 'Another satisfied customer confirming receipt of their order.' },
+      { title: 'Smooth Transaction',        cap: 'Customer thanking the team for a fast and hassle-free purchase process.' },
+      { title: 'Movie Marathon Access',     cap: 'Customer enjoying their Movie Marathon collection right after purchase.' },
+      { title: 'Retro Games Delivered',     cap: 'Customer confirming successful download of retro game titles.' },
+      { title: 'Repeat Customer Feedback',  cap: 'A returning customer sharing positive feedback after a second purchase.' }
+    ];
+    const proofs = proofDetails.map((p, i) => ({
+      img: IMG + 'proof' + (i + 1) + '.jpg',
+      cat: 'Customer Proof',
+      title: p.title,
+      loc: 'Philippines',
+      cap: p.cap,
+      verified: true,
+      rating: 5
+    }));
+
+    // Stats bar values: [countTo, suffix, label, color].
+    const stats = [
+      ['8',   '+',  'Product Categories', '#ff3b57'],
+      ['2',   '',   'Featured Packages',  '#ff7a45'],
+      ['100', '+',  'Customer Proofs',    '#ff3d9a'],
+      ['24',  '/7', 'Customer Support',   '#ffb020']
+    ];
+
+    // Popular items: 1-5 Steam Games, 6-10 Android Games, 11-15 Movies, 16-20 Retro Games.
+    const names = [
+      'NBA 2K27', 'Red Dead Redemption 2', 'God of War Ragnarok', 'The Last of Us', 'GTA V',
+      'Dead Cells', 'GrimValor', 'The House of Da Vinci II', 'Streets of Rage', 'The Room Two',
+      'The Shawshank Redemption', 'The Godfather', 'The Dark Knight', 'The Lord of the Rings', 'Interstellar',
+      'Legend of Zelda', 'Super Mario World', 'Pokemon', 'Sonic the Hedgehog', 'GoldenEye 007'
+    ];
+    const groups = [
+      ['Steam Games',   '#ff3b57'],
+      ['Android Games', '#3ddc84'],
+      ['Movies',        '#b388ff'],
+      ['Retro Games',   '#ffb020']
+    ];
+
+    // Testimonials — sample Filipino customer names + feedback. Swap in real reviews later.
+    const testi = [
+      { t: 'Bumili ako ng Steam Games Package, sobrang dami ng laro na kasama. Sulit na sulit sa presyo, isang bayad lang tapos libre nang panghabambuhay.', n: 'Mark Anthony D.', r: 'Steam Games Package' },
+      { t: 'Una kong beses bumili online ng ganito, medyo kinakabahan ako sa simula pero mabilis silang sumagot sa Messenger at nilinaw lahat ng tanong ko bago ako nag-GCash.', n: 'Jerica Mae S.', r: 'GDrive Package' },
+      { t: 'Yung Android games collection sulit talaga, marami akong nadownload na hindi ko na kailangan bumili isa-isa. Sana magdagdag pa sila ng bagong laro.', n: 'Christian P.', r: 'Android Games' },
+      { t: 'Nag-message lang ako sa Facebook Page, in-guide nila ako step by step hanggang sa natanggap ko yung files ko. Napakabilis ng response nila kahit gabi na.', n: 'Angeline R.', r: 'Customer Support' },
+      { t: 'Sa movie marathon package, sulit talaga kasi puwede mo panoorin paulit-ulit at hindi na kailangan mag-subscribe pa sa ibang app.', n: 'Kevin Joshua M.', r: 'Movie Marathon' },
+      { t: 'Sobrang linaw ng instructions pagkatapos magbayad. GCash lang pala ang gamit nila kaya mabilis ang transaction, walang komplikasyon.', n: 'Danica L.', r: 'GCash Payment' }
+    ];
+
+    // FAQ entries: [question, answer].
+    const faq = [
+      ['What products does GameDeck PH offer?', 'We offer digital gaming and entertainment content, including Steam games, Windows games and software, retro games, Android games, eBooks, comics, learning materials and movie marathon collections.'],
+      ['How does the one-time payment work?', 'You pay once for the package you choose — no monthly fees and no subscriptions. Once your GCash payment is confirmed, we send your access or files right away through our Facebook Page Messenger.'],
+      ['What does lifetime access mean?', 'Once you\'ve received your package, it\'s yours to keep and use for as long as you want. There\'s no expiration date and nothing to renew.'],
+      ['How do I receive my digital product?', 'After we confirm your GCash payment, we\'ll send your download link or files directly through Facebook Page Messenger, along with simple instructions on how to access everything.'],
+      ['How can I contact customer support?', 'The fastest way to reach us is by messaging our Facebook Page — that\'s where we handle most customer questions and orders. You can also use the contact form on this page.'],
+      ['What payment methods are available?', 'We currently accept GCash only. Just message us on our Facebook Page to get our GCash details and confirm your order before sending payment.'],
+      ['What is included in the Steam Games Package?', 'The Steam Games Package includes a curated bundle of Steam titles for a single one-time price. Message us on Facebook for the current, full list of games included — this is updated from time to time.'],
+      ['What is included in the GDrive Package?', 'The GDrive Package gives you access to a shared collection of digital content (games, software and more) stored on Google Drive. Message us on Facebook for the current list of what\'s inside.'],
+      ['Can I access my purchase again later?', 'Yes. Once you receive your files or access link, they\'re yours to keep — just make sure to save them somewhere safe right after you receive them.'],
+      ['How do I get support after purchasing?', 'Simply message our Facebook Page anytime and our team will assist you — whether it\'s a download issue, a question about your package, or anything else.']
+    ];
+
+    // Login demo credentials — front-end only, NOT secure. Replace with real backend auth.
+    const DEMO = async (u, p) => u === 'GameDeckPH' && p === 'GameDeckPHOfficial';
+
+    /* ============================================================
+       HELPERS
+    ============================================================ */
+    const $ = s => document.querySelector(s);
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    // Apply the Facebook URL to every .fbl link.
+    document.querySelectorAll('.fbl').forEach(a => a.href = FB);
+
+    // Fade-in-on-scroll for elements with class .rv
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('on');
+          ro.unobserve(e.target);
+        }
+      });
+    }, { threshold: .15 });
+    document.querySelectorAll('.rv').forEach(el => ro.observe(el));
+
+    /* ============================================================
+       TOP BAR ROTATION
+    ============================================================ */
+    $('#tb').innerHTML = bar.map((m, i) => `<span class="${i ? '' : 'on'}">${m}</span>`).join('');
+    const tbSpans = document.querySelectorAll('#tb span');
+    let tbIndex = 0;
+    setInterval(() => {
+      tbSpans[tbIndex].classList.remove('on');
+      tbIndex = (tbIndex + 1) % tbSpans.length;
+      tbSpans[tbIndex].classList.add('on');
+    }, 3000);
+
+    /* ============================================================
+       NAV (mobile menu + back-to-top)
+    ============================================================ */
+    const mm = $('#mm');
+    const burger = $('#burger');
+    burger.onclick = () => {
+      const open = mm.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open);
+    };
+    mm.querySelectorAll('a').forEach(a => a.onclick = () => mm.classList.remove('open'));
+
+    const topBtn = $('#top');
+    addEventListener('scroll', () => {
+      topBtn.style.display = scrollY > 300 ? 'flex' : 'none';
+    }, { passive: true });
+    topBtn.onclick = () => scrollTo({ top: 0, behavior: 'smooth' });
+
+    /* ============================================================
+       HERO (background slideshow + flip-cover carousel)
+    ============================================================ */
+    $('#slides').innerHTML = banners.map(b => `<div class="slide" style="background-image:url(${b})"></div>`).join('');
+    $('#cov').innerHTML = covers.map((c, i) => `<img class="cv" src="${c}" alt="Featured cover ${i + 1}">`).join('');
+
+    const heroSlides = document.querySelectorAll('.slide');
+    const heroCovers = document.querySelectorAll('.cv');
+    const heroCount = heroCovers.length;
+    let heroIndex = 0;
+
+    function renderHero() {
+      heroSlides.forEach((s, i) => s.classList.toggle('on', i === heroIndex));
+      heroCovers.forEach((c, i) => {
+        let d = ((i - heroIndex) % heroCount + heroCount) % heroCount;
+        if (d > heroCount / 2) d -= heroCount;
+        const posClass = { 0: ' c0', '-1': ' cl1', '-2': ' cl2', 1: ' cr1', 2: ' cr2' }[d] || '';
+        c.className = 'cv' + posClass;
+      });
+    }
+
+    heroCovers.forEach((c, i) => c.onclick = () => { heroIndex = i; renderHero(); restartHeroTimer(); });
+
+    let heroTimer;
+    function restartHeroTimer() {
+      clearInterval(heroTimer);
+      heroTimer = setInterval(() => {
+        heroIndex = (heroIndex + 1) % heroCount;
+        renderHero();
+      }, 6000);
+    }
+    renderHero();
+    restartHeroTimer();
+
+    /* ============================================================
+       PACKAGES
+    ============================================================ */
+    $('#pkgGrid').innerHTML = packages.map(p => `
+      <article class="pk rv">
+        <div class="im">
+          <img src="${p.img}" alt="${esc(p.name)}" loading="lazy">
+          <span class="tag">${p.tag}</span>
+        </div>
+        <div class="bd">
+          <h3>${esc(p.name)}</h3>
+          <div class="pr">${p.price}</div>
+        </div>
+        <a class="bar" href="${p.link}">SEE DETAILS <i class="fa-solid fa-arrow-right"></i></a>
+      </article>
+    `).join('');
+    document.querySelectorAll('#pkgGrid .rv').forEach(e => e.classList.add('on'));
+
+    /* ============================================================
+       CUSTOMER PROOFS CAROUSEL
+    ============================================================ */
+    $('#pt').innerHTML = proofs.map((p, i) => `
+      <button class="pc" data-i="${i}" aria-label="View ${esc(p.title)}">
+        <div class="th">
+          <img src="${p.img}" alt="${esc(p.title)}" loading="lazy">
+          <span class="ct"><i class="fa-solid fa-face-smile"></i> ${esc(p.cat)}</span>
+          ${p.verified ? '<span class="vt"><i class="fa-solid fa-circle-check"></i> VERIFIED</span>' : ''}
+        </div>
+        <div class="pb">
+          ${p.rating ? `<div class="st">${'<i class="fa-solid fa-star"></i>'.repeat(p.rating)}<small>${p.rating}.0 Star Experience</small></div>` : ''}
+          <h3>${esc(p.title)}</h3>
+          <div class="lc"><i class="fa-solid fa-location-dot"></i> ${esc(p.loc)}</div>
+          <p>${esc(p.cap)}</p>
+        </div>
+      </button>
+    `).join('');
+
+    let proofIndex = 0;
+    let proofHover = false;
+    const proofsPerView = () => innerWidth <= 560 ? 1 : innerWidth <= 800 ? 2 : innerWidth <= 1100 ? 3 : 4;
+
+    function moveProofs() {
+      const maxIndex = Math.max(0, proofs.length - proofsPerView());
+      proofIndex = proofIndex > maxIndex ? 0 : proofIndex < 0 ? maxIndex : proofIndex;
+      const cardWidth = $('.pc').getBoundingClientRect().width;
+      $('#pt').style.transform = `translateX(-${proofIndex * (cardWidth + 20)}px)`;
+    }
+
+    $('#pn').onclick = () => { proofIndex++; moveProofs(); };
+    $('#pp').onclick = () => { proofIndex--; moveProofs(); };
+    $('#pv').onmouseenter = () => proofHover = true;
+    $('#pv').onmouseleave = () => proofHover = false;
+    setInterval(() => {
+      if (!proofHover && !$('#lb').classList.contains('on')) {
+        proofIndex++;
+        moveProofs();
+      }
+    }, 3500);
+    addEventListener('resize', moveProofs);
+    moveProofs();
+
+    // Lightbox
+    let lightboxIndex = 0;
+    const lightbox = $('#lb');
+
+    function openLightbox(i) {
+      lightboxIndex = (i + proofs.length) % proofs.length;
+      const p = proofs[lightboxIndex];
+      $('#li').src = p.img;
+      $('#lt').textContent = p.title;
+      $('#lc').textContent = p.loc + ' — ' + p.cap;
+      lightbox.classList.add('on');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      lightbox.classList.remove('on');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.pc').forEach(c => c.onclick = () => openLightbox(+c.dataset.i));
+    $('#lx').onclick = closeLightbox;
+    $('#lp').onclick = () => openLightbox(lightboxIndex - 1);
+    $('#ln').onclick = () => openLightbox(lightboxIndex + 1);
+    lightbox.onclick = e => { if (e.target === lightbox) closeLightbox(); };
+
+    /* ============================================================
+       STATS (count-up animation on scroll into view)
+    ============================================================ */
+    $('#stats').innerHTML = stats.map(s => `
+      <div>
+        <div class="sn" style="color:${s[3]};text-shadow:0 0 20px ${s[3]}66" data-t="${s[0]}" data-s="${s[1]}">0</div>
+        <div class="sl">${s[2]}</div>
+      </div>
+    `).join('');
+
+    const statsObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = +el.dataset.t;
+        let n = 0;
+        const tick = setInterval(() => {
+          n = Math.min(target, n + Math.max(1, Math.ceil(target / 40)));
+          el.textContent = n + el.dataset.s;
+          if (n >= target) clearInterval(tick);
+        }, 30);
+        statsObserver.unobserve(el);
+      });
+    }, { threshold: .5 });
+    document.querySelectorAll('.sn').forEach(e => statsObserver.observe(e));
+
+    /* ============================================================
+       POPULAR ITEMS
+    ============================================================ */
+    $('#gr').innerHTML = names.map((n, i) => {
+      const g = groups[Math.floor(i / 5)];
+      return `
+        <article class="gc">
+          <img src="${IMG}popularitems${i + 1}.jpg" alt="${esc(n)}" loading="lazy">
+          <span class="gt" style="background:${g[1]}">${g[0]}</span>
+          <h3>${esc(n)}</h3>
+        </article>
+      `;
+    }).join('');
+
+    /* ============================================================
+       TESTIMONIALS (infinite loop carousel)
+    ============================================================ */
+    const testiTrack = $('#tt');
+    const LOOP_BUFFER = 3;
+
+    const testimonialCard = t => `
+      <div class="tc">
+        <div class="ti">
+          <div style="color:var(--red2)">★★★★★</div>
+          <q>${esc(t.t)}</q>
+          <div class="au">
+            <div class="av">${esc(t.n.split(' ').map(w => w[0]).slice(0, 2).join(''))}</div>
+            <div>
+              <h4>${esc(t.n)}</h4>
+              <span>${esc(t.r)}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    testiTrack.innerHTML =
+      testi.slice(-LOOP_BUFFER).map(testimonialCard).join('') +
+      testi.map(testimonialCard).join('') +
+      testi.slice(0, LOOP_BUFFER).map(testimonialCard).join('');
+
+    let testiIndex = LOOP_BUFFER;
+    let testiPerView = innerWidth <= 800 ? 1 : 3;
+
+    $('#dots').innerHTML = testi.map((_, i) => `<i data-i="${i}"></i>`).join('');
+
+    function updateTestimonials(animate = true) {
+      testiTrack.style.transition = animate ? '' : 'none';
+      testiTrack.style.transform = `translateX(-${testiIndex * 100 / testiPerView}%)`;
+      const activeDot = ((testiIndex - LOOP_BUFFER) % testi.length + testi.length) % testi.length;
+      document.querySelectorAll('#dots i').forEach((d, i) => d.classList.toggle('on', i === activeDot));
+    }
+
+    testiTrack.addEventListener('transitionend', () => {
+      if (testiIndex >= testi.length + LOOP_BUFFER) { testiIndex -= testi.length; updateTestimonials(false); }
+      if (testiIndex < LOOP_BUFFER) { testiIndex += testi.length; updateTestimonials(false); }
+    });
+
+    $('#tx').onclick = () => { testiIndex++; updateTestimonials(); };
+    $('#tp').onclick = () => { testiIndex--; updateTestimonials(); };
+    document.querySelectorAll('#dots i').forEach(d => d.onclick = () => {
+      testiIndex = LOOP_BUFFER + +d.dataset.i;
+      updateTestimonials();
+    });
+
+    addEventListener('resize', () => {
+      testiPerView = innerWidth <= 800 ? 1 : 3;
+      updateTestimonials(false);
+    });
+
+    let testiHover = false;
+    testiTrack.parentElement.onmouseenter = () => testiHover = true;
+    testiTrack.parentElement.onmouseleave = () => testiHover = false;
+    setInterval(() => { if (!testiHover) { testiIndex++; updateTestimonials(); } }, 5000);
+    updateTestimonials(false);
+
+    /* ============================================================
+       FAQ (accordion)
+    ============================================================ */
+    $('#fq').innerHTML = faq.map((f, i) => `
+      <div class="fi">
+        <h3><button aria-expanded="false" aria-controls="a${i}">${esc(f[0])}<b>+</b></button></h3>
+        <div class="fa" id="a${i}" role="region"><p>${esc(f[1])}</p></div>
+      </div>
+    `).join('');
+
+    document.querySelectorAll('.fi button').forEach(b => b.onclick = () => {
+      const item = b.closest('.fi');
+      const wasOpen = item.classList.contains('on');
+      document.querySelectorAll('.fi').forEach(x => {
+        x.classList.remove('on');
+        x.querySelector('button').setAttribute('aria-expanded', 'false');
+      });
+      if (!wasOpen) {
+        item.classList.add('on');
+        b.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    // FAQPage structured data for SEO.
+    const faqSchema = document.createElement('script');
+    faqSchema.type = 'application/ld+json';
+    faqSchema.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faq.map(f => ({
+        '@type': 'Question',
+        name: f[0],
+        acceptedAnswer: { '@type': 'Answer', text: f[1] }
+      }))
+    });
+    document.head.appendChild(faqSchema);
+
+    /* ============================================================
+       CONTACT FORM (front-end only — wire up a backend to send)
+    ============================================================ */
+    $('#cf').onsubmit = e => {
+      e.preventDefault();
+      $('#cs').textContent = 'Form is not connected yet. Connect a backend or email service to send messages.';
+      e.target.reset();
+    };
+
+    /* ============================================================
+       LOGIN MODAL
+    ============================================================ */
+    const loginModal = $('#md');
+    $('#loginBtn').onclick = () => { loginModal.classList.add('on'); $('#lu').focus(); };
+
+    const closeLoginModal = () => loginModal.classList.remove('on');
+    $('#mx').onclick = closeLoginModal;
+    loginModal.onclick = e => { if (e.target === loginModal) closeLoginModal(); };
+
+    addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeLoginModal(); closeLightbox(); }
+      if (lightbox.classList.contains('on')) {
+        if (e.key === 'ArrowRight') openLightbox(lightboxIndex + 1);
+        if (e.key === 'ArrowLeft') openLightbox(lightboxIndex - 1);
+      }
+    });
+
+    $('#lf').onsubmit = async e => {
+      e.preventDefault();
+      const username = $('#lu').value.trim();
+      if (await DEMO(username, $('#lpw').value)) {
+        $('#err').style.display = 'none';
+        closeLoginModal();
+        $('#loginBtn').style.display = 'none';
+        $('#user').style.display = 'flex';
+        $('#uname').textContent = username;
+        e.target.reset();
+      } else {
+        $('#err').style.display = 'block';
+      }
+    };
+    $('#logout').onclick = () => {
+      $('#user').style.display = 'none';
+      $('#loginBtn').style.display = '';
+    };
+  </script>
+</body>
+</html>
